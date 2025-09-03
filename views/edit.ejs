@@ -1,0 +1,109 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <div class="row mt-3">
+        <div class="col-7 offset-2">
+    <form method="post" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation" enctype="multipart/form-data">
+        <h3 class="mb-3">Edit here : </h3>
+
+        <div class="mb-3">    
+            <label for="title" class="form-label">Edit Title : </label>    
+            <input name="listing[title]"
+            value="<%= listing.title %>" 
+            type="text"
+            class="form-control" required>
+            <div class="valid-feedback">Title looks good!</div>
+            <div class="invalid-feedback">Enter valid Title!</div>
+        </div>
+        <br>
+
+        <div class="mb-3">    
+            <label for="description" class="form-label">Edit description : </label>    
+        <textarea name="listing[description]" 
+        value="<%= listing.description %>"
+        class="form-control" required><%= listing.description %></textarea>
+        <div class="valid-feedback">Good Description!</div>
+        <div class="invalid-feedback">Enter valid Description</div>
+        
+        </div>
+        <br>
+
+        <div class="mb-3">
+            Original Image : <br>
+            <img src="<%= originalImageUrl %>" style="height: 200px; width : 250px; border-radius: 20px;" alt="">
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload image : </label>
+        <input name="listing[image]" 
+        type="file"
+        class="form-control">
+        </div>
+        <br> 
+        
+        <div class="row">
+        <div class="mb-3 col-md-4"> 
+            <label for="price" class="form-label">Edit price:</label>      
+        <input name="listing[price]" 
+        value="<%= listing.price %>" 
+        type="number"
+        class="form-control" required>
+        <div class="invalid-feedback">Enter a valid price!</div>
+        </div>
+        <br>
+
+        <div class="mb-3 col-md-8">        
+            <label for="country" class="form-label">Enter the Country : </label>
+        <select name="listing[country]" id="country" class="form-select" required>
+    <option selected disabled value="">Select a country</option>
+    <option value="India">India</option>
+    <option value="United States">United States</option>
+    <option value="France">France</option>
+    <option value="Italy">Italy</option>
+    <option value="Australia">Australia</option>
+    <option value="Canada">Canada</option>
+    <option value="Japan">Japan</option>
+    <option value="Brazil">Brazil</option>
+    <!-- Add more as needed -->
+  </select>
+        <div class="valid-feedback">Nice choice!</div>
+        <div class="invalid-feedback">Select a valid Country!</div>
+        </div> 
+        <br>
+        </div>
+
+        <div class="mb-3">   
+            <label for="location" class="form-label">Edit location : </label>    
+        <input name="listing[location]" 
+        value="<%= listing.location %>" 
+        type="text"
+        class="form-control" required>
+                <div class="valid-feedback">Nice location!</div>
+        <div class="invalid-feedback">Select a valid Location
+        </div>
+        <br>
+
+        <div class="mb-3">   
+            <label for="category" class="form-label">Type of Location : </label>    
+        <select name="listing[category]" id="category" class="form-control form-select reverse" required>
+            <option disabled selected value="<%= listing.category %>"><%= listing.category %></option>
+    <option value="Hive">Hive</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Mountain">Mountain</option>
+    <option value="Castles/Forts">Castles/Forts</option>
+    <option value="Beach Areas">Beach Areas</option>
+    <option value="Lakes">Lakes</option>
+    <option value="Villas">Villas</option>
+    <option value="Arctic Place">Arctic Place</option>
+    <option value="Farm">Farm</option>
+    <option value="Forestry">Forestry</option>
+        </select>
+        <div class="invalid-feedback">Select a type!</div>
+        </div>
+        <br><br>
+
+        <button class="btn btn-dark mb-3">Edit!</button>
+    </form>
+    </div>
+    </div>
+</body>

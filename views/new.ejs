@@ -1,0 +1,105 @@
+<% layout("layouts/boilerplate") %>
+<body>
+    <div class="row mt-3">
+        <div class="col-7 offset-2">
+    <form method="post" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+        <h3>Create a new List here : </h3>
+        <br>
+
+        <div class="mb-3">    
+            <label for="title" class="form-label">Enter Title : </label>    
+            <input name="listing[title]" 
+            placeholder="Enter the Title" 
+            type="text"
+            class="form-control" required>
+            <div class="valid-feedback">Title looks good!</div>
+            <div class="invalid-feedback">Enter valid Title!</div>
+        </div>
+
+        <div class="mb-3">    
+            <label for="description" class="form-label">Enter the description : </label>    
+        <textarea name="listing[description]" 
+        placeholder="Enter the description"
+        class="form-control" required>
+        </textarea>
+        <div class="valid-feedback">Good Description!</div>
+        <div class="invalid-feedback">Enter valid Description</div>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload image : </label>
+        <input name="listing[image]" 
+        type="file"
+        class="form-control" required>
+        <div class="valid-feedback">Fine Image!</div>
+        </div>
+        
+        <div class="row">
+        <div class="mb-3 col-md-4"> 
+            <label for="price" class="form-label">Enter the price : </label>      
+        <input name="listing[price]" 
+        placeholder="Enter the price" 
+        type="number"
+        class="form-control" required>
+        <div class="invalid-feedback">Enter a valid price!</div>
+        </div>
+        <br>
+
+        <div class="mb-3 col-md-8">        
+            <label for="country" class="form-label">Enter the Country : </label>
+        <select name="listing[country]" id="country" class="form-select" required>
+    <option selected disabled value="">Select a country</option>
+    <option value="India">India</option>
+    <option value="United States">United States</option>
+    <option value="France">France</option>
+    <option value="Italy">Italy</option>
+    <option value="Australia">Australia</option>
+    <option value="Canada">Canada</option>
+    <option value="Japan">Japan</option>
+    <option value="Brazil">Brazil</option>
+    <!-- Add more as needed -->
+  </select>
+        <div class="valid-feedback">Nice choice!</div>
+        <div class="invalid-feedback">Select a valid Country!</div>
+        </div> 
+        <br>
+        </div>
+        
+
+        <div class="mb-3">   
+            <label for="location" class="form-label">Enter the location : </label>    
+        <input name="listing[location]" 
+        placeholder="Enter the location"
+        type="text"
+        class="form-control" required>
+        <div class="valid-feedback">Nice location!</div>
+        <div class="invalid-feedback">Select a valid location!</div>
+        </div>
+        
+
+        <div class="mb-3">   
+            <label for="category" class="form-label">Type of Location : </label>    
+        <select name="listing[category]" id="category" class="form-control form-select" required>
+            <option disabled selected value="">Choose a category</option>
+    <option value="Hive">Hive</option>
+    <option value="Rooms">Rooms</option>
+    <option value="Iconic Cities">Iconic Cities</option>
+    <option value="Mountain">Mountain</option>
+    <option value="Castles/Forts">Castles/Forts</option>
+    <option value="Beach Areas">Beach Areas</option>
+    <option value="Lakes">Lakes</option>
+    <option value="Villas">Villas</option>
+    <option value="Arctic Place">Arctic Place</option>
+    <option value="Farm">Farm</option>
+    <option value="Forestry">Forestry</option>
+        </select>
+
+        <div class="invalid-feedback">Select a type!</div>
+        </div>
+        <br><br>
+
+        <button class="btn btn-dark new-btn">Add!</button>
+    </form>
+    </div>
+    </div>
+</body>

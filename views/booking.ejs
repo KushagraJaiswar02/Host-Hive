@@ -1,0 +1,85 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container my-5">
+  <div class="row justify-content-center g-4">
+    
+    <!-- Booking Form -->
+    <div class="col-md-7">
+      <h2 class="mb-8">Book Your Stay in :</h2>
+
+         <!-- Listing Preview -->
+    <div class="col-md-8">
+      <div class="card shadow-sm rounded">
+        <img src="<%= listing.image.url %>" class="card-img-top" alt="<%= listing.title %>" style="object-fit: cover; height: 200px;">
+        <div class="card-body">
+          <h5 class="card-title"><%= listing.title %></h5>
+          <p class="card-text text-muted"><%= listing.location %></p>
+          <p class="fw-bold">₹<%= listing.price %> / night</p>
+        </div>
+      </div>
+    </div>
+
+      <form action="/listings/<%= listing._id %>/booking" method="POST" class="card p-4 shadow-sm rounded">
+
+        <!-- Check In -->
+        <div class="mb-3">
+          <label for="checkIn" class="form-label">Check-In Date</label>
+          <input type="date" class="form-control" id="checkIn" name="checkIn" required>
+        </div>
+
+        <!-- Check Out -->
+        <div class="mb-3">
+          <label for="checkOut" class="form-label">Check-Out Date</label>
+          <input type="date" class="form-control" id="checkOut" name="checkOut" required>
+        </div>
+
+        <!-- Guests -->
+        <div class="mb-3">
+          <label for="guests" class="form-label">Number of Guests</label>
+          <input type="number" class="form-control" id="guests" name="guests" min="1" value="1" required>
+        </div>
+
+        <!-- Total Price Preview -->
+        <div class="mb-3">
+          <label class="form-label fw-bold">Total Price</label>
+          <p id="totalPrice" class="fs-5 text-success">₹0</p>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Confirm Booking</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- JS for price calculation -->
+<script>
+  const checkInInput = document.getElementById("checkIn");
+  const checkOutInput = document.getElementById("checkOut");
+  const guestsInput = document.getElementById("guests");
+  const totalPriceElement = document.getElementById("totalPrice");
+  const pricePerNight = <%= listing.price %>;
+
+  function calculateTotal() {
+    const checkIn = new Date(checkInInput.value);
+    const checkOut = new Date(checkOutInput.value);
+    const guests = parseInt(guestsInput.value) || 1;
+
+    if (checkIn && checkOut && checkOut > checkIn) {
+      const nights = Math.ceil((checkOut - checkIn) / (1000 * 60 * 60 * 24));
+      const total = nights * pricePerNight * guests;
+      totalPriceElement.textContent = "₹" + total.toLocaleString();
+    } else {
+      totalPriceElement.textContent = "₹0";
+    }
+  }
+
+  checkInInput.addEventListener("change", calculateTotal);
+  checkOutInput.addEventListener("change", calculateTotal);
+  guestsInput.addEventListener("input", calculateTotal);
+</script>
+

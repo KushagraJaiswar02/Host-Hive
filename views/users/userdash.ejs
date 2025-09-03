@@ -1,0 +1,281 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+  /* General background */
+  body {
+    background: linear-gradient(135deg, #f9fafc, #e8f0ff);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  /* About Section */
+  .about {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 25px 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin: 20px auto;
+    max-width: 900px;
+    transition: transform 0.2s ease;
+  }
+  .about:hover {
+    transform: translateY(-3px);
+  }
+
+  .aboutUser h2 {
+    font-size: 2.5rem;
+    color: #4a4a4a;
+    margin-right: 10px;
+    animation: float 3s ease-in-out infinite;
+  }
+  .aboutUser h3 {
+    font-weight: 600;
+    color: #333;
+  }
+
+  .aboutEmail h5 {
+    font-weight: 500;
+    color: #444;
+  }
+  .aboutEmail .email {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 400;
+  }
+
+  /* Keyframe animation for subtle float */
+  @keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
+  }
+
+  /* User Stuff Layout */
+  .userstuff {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin: 30px auto;
+    max-width: 1100px;
+  }
+
+  /* Listing, Bookings & Reviews Cards */
+  .listing, .bookings, .reviews {
+    flex: 1;
+    min-width: 320px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    transition: all 0.25s ease;
+  }
+  .listing:hover, .bookings:hover, .reviews:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+  }
+
+  .listing h3, .bookings h3, .reviews h3 {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  /* Individual cards */
+  .card-hosted {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hosted:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+  }
+
+  .card-hosted img {
+    width: 70px;
+    height: 70px;
+    border-radius: 12px;
+    object-fit: cover;
+  }
+
+  .card-hosted h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: #333;
+  }
+
+  .card-hosted p {
+    font-size: 0.85rem;
+    margin: 0;
+    color: #777;
+  }
+
+  .btn-outline-primary, .btn-outline-danger {
+    border-radius: 30px;
+    font-size: 0.8rem;
+    padding: 5px 15px;
+    transition: all 0.2s ease;
+  }
+  .btn-outline-primary:hover {
+    background: #007bff;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0,123,255,0.3);
+  }
+  .btn-outline-danger:hover {
+    background: #dc3545;
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(220, 53, 69, 0.3);
+  }
+</style>
+
+<!-- About Section -->
+<div class="about mt-3">
+  <div class="aboutUser d-flex align-items-center">
+    <h2><i class="fa-solid fa-circle-user"></i></h2>
+    <h3>Welcome, <%= user.username %>!</h3>
+  </div>
+  <br>
+  <div class="aboutEmail">
+    <h5>Email: <span class="email"><%= user.email %></span></h5>
+  </div>
+  <div class="numberoflists mt-3">
+    <p class="text-muted">You've made <%= user.listings.length %> listings so far.</p>
+  </div>
+  <div class="numberoflists mt-2">
+    <p class="text-muted">You've made <%= user.bookings.length %> bookings so far.</p>
+  </div>
+  <div class="numberoflists mt-2">
+   <p class="text-muted">You've made <%= user.reviews.length %> reviews so far.</p>
+</div>
+</div>
+
+<!-- User Stuff -->
+<div class="userstuff">
+
+  <!-- Listings -->
+  <div class="listing">
+    <h3>Your Hosted Hives 🏠</h3>
+    <hr>
+    <% if(user.listings.length === 0) { %>
+      <p class="text-muted">No hives hosted yet…</p>
+    <% } else { %>
+      <% for(let listings of user.listings) {%>
+        <div class="card-hosted mb-3">
+          <img src="<%= listings.image.url %>" alt="<%= listings.title %>">
+          <div class="flex-grow-1">
+            <h6><%= listings.title %></h6>
+            <p><%= listings.location %></p>
+          </div>
+          <a href="/listings/<%= listings._id %>" class="btn btn-sm btn-outline-primary">View</a>
+        </div>
+      <% } %>
+    <% } %>
+  </div>
+
+  <!-- Bookings -->
+<div class="bookings">
+  <h3>Your Bookings 📅</h3>
+  <hr>
+  <% if (user.bookings.length > 0) { %>
+    <% user.bookings.forEach(booking => { %>
+      <div class="card-hosted mb-3">
+        <img src="<%= booking.listing.image.url %>" alt="<%= booking.listing.title %>">
+        <div class="flex-grow-1">
+          <h6><%= booking.listing.title %></h6>
+          <p>
+            <strong>Dates:</strong> <%= booking.checkIn.toDateString() %> - <%= booking.checkOut.toDateString() %><br>
+            <strong>Guests:</strong> <%= booking.guests %><br>
+            <strong>Total:</strong> $<%= booking.totalPrice %>
+          </p>
+        </div>
+
+        <!-- Cancel Button -->
+        <button class="btn btn-danger btn-sm" onclick="openCancelModal('<%= booking._id %>')">
+  Cancel
+</button>
+
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No bookings yet.</p>
+  <% } %>
+</div>
+
+<!-- Single Cancel Modal -->
+<div id="cancelModal" class="modal fade" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg rounded-3">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">Cancel Booking</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="mb-3 fs-5">Are you sure you want to cancel this booking?</p>
+        <i class="bi bi-exclamation-triangle text-warning fs-1"></i>
+      </div>
+      <div class="modal-footer">
+        <form id="cancelForm" method="POST">
+          <!-- Tell method-override to treat this as DELETE -->
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, Go Back</button>
+          <button type="submit" class="btn btn-danger">Yes, Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openCancelModal(bookingId) {
+  // prepend with / to make it absolute
+  document.getElementById("cancelForm").action = `/${bookingId}?_method=DELETE`;
+  const cancelModal = new bootstrap.Modal(document.getElementById("cancelModal"));
+  cancelModal.show();
+}
+</script>
+
+
+<!-- Reviews -->
+<div class="reviews">
+  <h3>Your Reviews ✍️</h3>
+  <hr>
+  <% if (user.reviews.length === 0) { %>
+    <p class="text-muted">You haven't written any reviews yet.</p>
+  <% } else { %>
+    <% user.reviews.forEach(review => { %>
+      <div class="card-hosted mb-3">
+        <% if (review.listing) { %>
+          <div class="flex-grow-1">
+            <h6>
+              <a href="/listings/<%= review.listing._id %>" class="text-decoration-none">
+                <%= review.listing.title %>
+              </a>
+            </h6>
+        <% } else { %>
+          <div class="flex-grow-1">
+            <h6 class="text-danger">[Listing Missing/Deleted]</h6>
+        <% } %>
+
+            <p><%= review.comment %></p>
+          </div>
+
+          <form 
+            action="/listings/<%= review.listing ? review.listing._id : '' %>/reviews/<%= review._id %>?_method=DELETE" 
+            method="POST"
+          >
+            <button class="btn btn-sm btn-outline-danger">Delete</button>
+          </form>
+      </div>
+    <% }) %>
+  <% } %>
+</div>
+
+
+
+
+

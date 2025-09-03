@@ -1,0 +1,282 @@
+<% layout("layouts/boilerplate") %>
+
+   <style>
+
+    .filter {
+  text-align: center;
+  margin: 0 12px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-3px);
+}
+
+.filter p {
+  font-size: 0.9rem;
+  margin: 5px 0 0;
+  color: #444;
+}
+
+.filter i {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.filter.active {
+  background-color: #e3f2fd;
+  border: 1px solid #90caf9;
+}
+
+/* Container */
+.card {
+  position: relative;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+
+/* Image */
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Favorite (heart) button */
+.card .fav-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  padding: 8px;
+  font-size: 1.2rem;
+  color: #e53935;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.card .fav-btn:hover {
+  transform: scale(1.15);
+}
+
+/* Body */
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #212121;
+}
+
+.card-subtitle {
+  font-size: 0.9rem;
+  color: #757575;
+  margin-bottom: 8px;
+}
+
+/* Rating */
+.rating {
+  font-size: 0.85rem;
+  color: #fbc02d;
+  font-weight: 600;
+}
+
+/* Price Row */
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.price {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0288d1;
+}
+
+.per-night {
+  font-size: 0.85rem;
+  color: #757575;
+}
+
+   </style>
+
+    <button class="btn btn-outline-dark d-md-none mb-2 mt-3 collapse-btn" type="button" data-bs-toggle="collapse" data-bs-target="#filtersCollapse">
+     <i class="fa-solid fa-filter"></i> Toggle Filters
+    </button>
+
+    <div id="filtersCollapse" class="collapse d-md-flex flex-wrap gap-3 p-3 filters justify-content-center">
+    <div class="filters d-flex flex-nowrap overflow-auto">
+    <a href="/listings">
+        <div class="filter">
+            <div><i class="fa-brands fa-hive"></i></div>
+            <p>Hive</p>
+        </div>
+    </a>
+    
+    <a href="/listings/category/Rooms">
+        <div class="filter">
+            <div><i class="fa-solid fa-bed"></i></div>
+            <p>Rooms</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Iconic%20Cities">
+        <div class="filter">
+            <div><i class="fa-solid fa-mountain-city"></i></div>
+            <p>Iconic Cities</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Mountain">
+        <div class="filter">
+            <div><i class="fa-solid fa-mountain"></i></div>
+            <p>Mountain</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Castles-forts">
+        <div class="filter">
+            <div><i class="fa-solid fa-chess-rook"></i></div>
+            <p>Castles-Forts</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Beach%20Areas">
+        <div class="filter">
+            <div><i class="fa-solid fa-umbrella-beach"></i></div>
+            <p>Beach Areas</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Lakes">
+        <div class="filter">
+            <div><i class="fa-solid fa-water"></i></div>
+            <p>Lakes</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Villas">
+        <div class="filter">
+            <div><i class="fa-solid fa-house"></i></div>
+            <p>Villas</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Arctic%20Place">
+        <div class="filter">
+            <div><i class="fa-solid fa-snowflake"></i></div>
+            <p>Arctic Place</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Farm">
+        <div class="filter">
+            <div><i class="fa-solid fa-cow"></i></div>
+            <p>Farm</p>
+        </div>
+    </a>
+
+    <a href="/listings/category/Forestry">
+        <div class="filter">
+            <div><i class="fa-solid fa-tree"></i></div>
+            <p>Forestry</p>
+        </div>
+    </a>
+</div>
+</div>
+
+
+           <div class="tax-switch">
+             <div class="form-check-reverse form-switch">
+             <input class="form-check-input" type="checkbox" role="switch" id="flexswitchCheckDefault">
+             <label class="form-check-label" for="switchCheckDefault">Display Tax Amount</label>
+             </div>
+           </div>
+
+
+    <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 g-4">
+  <% for(let listing of allListings) { %>
+    <div class="col">
+      <a href="/listings/<%= listing._id %>" class="listing-link text-decoration-none">
+        <div class="card">
+          <!-- Image -->
+          <img 
+            src="<%= listing.image.url %>" 
+            class="card-img-top" 
+            alt="Card image" 
+            style="height: 16rem; object-fit: cover;"
+          >
+
+          <!-- Floating heart button -->
+          <div class="fav-btn">
+            <i class="fa fa-heart"></i>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body">
+            <h5 class="card-title"><%= listing.title %></h5>
+            <p class="card-subtitle text-muted">
+              <%= listing.location || "Unknown Location" %>
+            </p>
+            
+            <!-- Rating placeholder -->
+            <p class="rating">
+            <% if (listing.reviewCount >= 3) { %>
+            ⭐ <%= listing.avgRating %> (<%= listing.reviewCount %> reviews)
+            <% } else { %>
+            Not enough reviews yet
+            <% } %>
+            </p>
+
+            
+            <!-- Price Row -->
+            <div class="price-row">
+              <span class="price">₹<%= listing.price.toLocaleString("en-IN") %>/ night</span>
+              
+            </div>
+
+            <!-- Tax info -->
+            <p class="tax-info text-muted mb-0">+18% GST</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  <% } %>
+</div>
+
+
+
+<script>
+    let taxswitch = document.getElementById("flexswitchCheckDefault");
+    taxswitch.addEventListener("click", ()=>{
+       let taxInfo = document.getElementsByClassName("tax-info");
+       for(info of taxInfo) {
+        if(info.style.display != "inline"){
+            info.style.display="inline";
+        } else {
+            info.style.display= "none";
+        }
+       }
+    });
+</script>

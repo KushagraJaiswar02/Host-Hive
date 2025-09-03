@@ -1,0 +1,323 @@
+body{
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container{
+    flex: 1;
+}
+
+.navbar{
+    height: 5rem;
+    background: linear-gradient(90deg, #ffeb9c, #f1b80a); /* warm honey gradient */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    border-bottom: 2px solid #FFB300; /* subtle darker honey line */
+}
+
+.logo-img {
+    max-height: 120px;  
+    width: auto;       
+    border-radius: 12px;
+    padding: 1.5px;
+    margin-top: 1px;
+    object-fit: contain;
+}
+
+@media (max-width: 768px) {
+    .logo-img {
+        max-height:100px;
+    }
+}
+
+@media (max-width: 576px) {
+    .logo-img {
+        max-height: 80px;
+    }
+}
+
+.fa-compass{
+    font-size: 1.2rem;
+}
+
+.nav-link{
+    color: #333333 !important;  /* dark, readable text */
+    font-weight: 600 !important;
+    transition: color 0.3s ease;
+}
+
+/* Bounce animation */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+/* Apply to all icons inside navbar links */
+.navbar-nav .nav-link i {
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect */
+.navbar-nav .nav-link:hover i {
+    color: #FF6F00;   /* orange-honey accent */
+    animation: bounce 0.6s ease;
+    text-shadow: 0 0 8px rgba(255, 111, 0, 0.6);
+}
+
+.navbar-nav .nav-link:hover {
+    color: #FF6F00 !important;
+}
+
+
+/*Footer*/
+.f-info-links a{
+    text-decoration: none !important;  
+    color: #222222 !important;
+}
+.f-info-links a:hover{
+    text-decoration: underline !important;
+    color: #222222 !important;
+}
+
+.f-info-links,.f-info-socials,.f-info-brand{
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.f-info-socials i{
+    margin-right: 1rem !important;
+     font-size: 1.5rem !important;
+}
+
+.f-info{
+    width: 100% !important;
+    text-align: center !important;
+    height: 8rem !important;
+    background-color: #ebebeb !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: space-evenly !important;
+    padding: 1.5rem !important;
+    gap : 1rem !important;
+}
+
+/*cards*/
+.card{
+    border: none !important;
+    margin-bottom: 2rem;
+}
+
+.card-img-top{
+    border-radius: 1.2rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400 !important;
+}
+
+.listing-link{
+    text-decoration: none;
+}
+
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.2;
+    background-color: white;
+}
+
+/* New page */
+.new-btn{
+    margin-bottom: 3rem !important;
+}
+
+/* Show page  */
+.show-img{
+    height: 30vh;
+}
+
+
+/* Review */
+.review-card{
+    border: 2px solid black;
+    border-radius: 20px;
+}
+
+.card-margin{
+    margin: 10px;
+}
+
+.deletebtn{
+     margin: 10px;
+}
+
+/* map */
+#map{
+    height: 500px;
+    width: 100svh;
+    border-radius: 20px;
+}
+
+/* Search Form Container */
+.search-form {
+  display: flex;
+  align-items: center;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1); /* softer shadow */
+  background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Hover for subtle lift */
+.search-form:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Input Field */
+.search-input {
+  border: none;
+  padding: 8px 16px;
+  outline: none;
+  width: 220px;
+  font-size: 0.95rem;
+  transition: width 0.3s ease, background 0.3s ease;
+  color: #333;
+  background-color: transparent;
+}
+
+/* Expand on focus */
+.search-input:focus {
+  width: 300px;
+  background-color: #f9f9f9;
+}
+
+/* Search Button */
+.search-btn {
+  background-color: #ff5a5f; /* Airbnb accent */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover effect for button */
+.search-btn:hover {
+  background-color: #e04850;
+  transform: scale(1.05);
+}
+
+/* Optional: icon spacing */
+.search-btn i {
+  margin-left: 4px;
+}
+
+
+.filters-wrapper {
+  justify-content: center;
+  background-color: #f5faff;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.filters {
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+}
+
+.filters::-webkit-scrollbar {
+  height: 6px;
+}
+
+.filters::-webkit-scrollbar-thumb {
+  background-color: #aaa;
+  border-radius: 10px;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  padding: 0.5rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.2s ease-in-out;
+  flex: 0 0 auto;
+}
+
+.filter:hover {
+  background-color: white;
+  box-shadow: 0px 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.filter i {
+  font-size: 1.5rem;
+  margin-bottom: 0.3rem;
+  color: #222;
+}
+
+.filter p {
+  font-size: 0.8rem;
+  margin: 0;
+  font-weight: 500;
+  color: #333;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+
+    .tax-info{
+        display: none;
+    }
+    .tax-switch{
+        border: 1px solid black;
+        border-radius: 15px;
+        height: 3.5rem;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 0.8rem;
+        display: flex;
+    }
+
+    .tax-switch {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: white;
+  border: 1px solid #000;
+  padding: 10px 15px;
+  border-radius: 10px;
+  z-index: 999;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.tax-switch:hover {
+  opacity: 1;
+}
+
+.filters a{
+    text-decoration: none;
+    color: #000;
+}
