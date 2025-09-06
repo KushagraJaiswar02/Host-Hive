@@ -29,45 +29,53 @@ module.exports.newRoute = (req, res)=>{
 };
 
 module.exports.createRoute = async (req, res) => {
-  // 1. Geocode based on location string (from form)
-  const geoData = await geocodingClient
-    .forwardGeocode({
-      query: req.body.listing.location, // form field: listing[location]
-      limit: 1
-    })
-    .send();
+  try {
+    // 1. Geocode
+    const geoData = await geocodingClient
+      .forwardGeocode({
+        query: req.body.listing.location,
+        limit: 1
+      })
+      .send();
 
-  // 2. Create new listing
-  const newListing = new Listing(req.body.listing);
+    // 2. Create new listing
+    const newListing = new Listing(req.body.listing);
 
-  // 3. Add geometry from geocode
-  if (geoData.body.features.length > 0) {
-    newListing.geometry = geoData.body.features[0].geometry;
-  } else {
-    // fallback if no geocode found
-    newListing.geometry = {
-      type: "Point",
-      coordinates: [0, 0]
-    };
+    // 3. Add geometry
+    if (geoData.body.features.length > 0) {
+      newListing.geometry = geoData.body.features[0].geometry;
+    } else {
+      newListing.geometry = { type: "Point", coordinates: [0, 0] };
+    }
+
+    // 4. Add image if uploaded
+    if (req.file) {
+      newListing.image = {
+        url: req.file.path,
+        filename: req.file.filename,
+      };
+    }
+
+    // 5. Add owner
+    newListing.owner = req.user._id;
+
+    // 6. Save listing
+    await newListing.save();
+
+    // 7. Push listing into the user’s `listings`
+    const user = await User.findById(req.user._id);
+    user.listings.push(newListing._id);
+    await user.save();
+
+    req.flash("success", "New listing created!");
+    res.redirect(`/listings/${newListing._id}`);
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    req.flash("error", "Failed to create listing.");
+    res.redirect("/listings/new");
   }
-
-  // 4. Add image if uploaded
-  if (req.file) {
-    newListing.image = {
-      url: req.file.path,
-      filename: req.file.filename,
-    };
-  }
-
-  // 5. Add owner
-  newListing.owner = req.user._id;
-
-  // 6. Save to DB
-  await newListing.save();
-
-  req.flash("success", "New listing created!");
-  res.redirect(`/listings/${newListing._id}`);
 };
+
 
 module.exports.showRoute = async (req, res)=>{
     
