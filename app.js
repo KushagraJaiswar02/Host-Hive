@@ -30,7 +30,7 @@ const bookingRoutes = require("./routes/bookings");
 
 
 
-const MONGOURL = 'mongodb://127.0.0.1:27017/wanderlust';
+const MONGOURL = process.env.MONGOURL || 'mongodb://127.0.0.1:27017/wanderlust';
 
 main().then( ()=>{
     console.log("connected to db");
