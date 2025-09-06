@@ -28,6 +28,27 @@ module.exports.newRoute = (req, res)=>{
     res.render("new.ejs");
 };
 
+module.exports.createRoute = async (req, res) => {
+  const newListing = new Listing(req.body.listing);
+
+  // add image if uploaded
+  if (req.file) {
+    newListing.image = {
+      url: req.file.path,
+      filename: req.file.filename,
+    };
+  }
+
+  // assign owner
+  newListing.owner = req.user._id;
+
+  await newListing.save();
+
+  req.flash("success", "New listing created!");
+  res.redirect(`/listings/${newListing._id}`);
+};
+
+
 module.exports.showRoute = async (req, res)=>{
     
     let { id }= req.params;
