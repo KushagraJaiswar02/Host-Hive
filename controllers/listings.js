@@ -29,9 +29,29 @@ module.exports.newRoute = (req, res)=>{
 };
 
 module.exports.createRoute = async (req, res) => {
+  // 1. Geocode based on location string (from form)
+  const geoData = await geocodingClient
+    .forwardGeocode({
+      query: req.body.listing.location, // form field: listing[location]
+      limit: 1
+    })
+    .send();
+
+  // 2. Create new listing
   const newListing = new Listing(req.body.listing);
 
-  // add image if uploaded
+  // 3. Add geometry from geocode
+  if (geoData.body.features.length > 0) {
+    newListing.geometry = geoData.body.features[0].geometry;
+  } else {
+    // fallback if no geocode found
+    newListing.geometry = {
+      type: "Point",
+      coordinates: [0, 0]
+    };
+  }
+
+  // 4. Add image if uploaded
   if (req.file) {
     newListing.image = {
       url: req.file.path,
@@ -39,15 +59,15 @@ module.exports.createRoute = async (req, res) => {
     };
   }
 
-  // assign owner
+  // 5. Add owner
   newListing.owner = req.user._id;
 
+  // 6. Save to DB
   await newListing.save();
 
   req.flash("success", "New listing created!");
   res.redirect(`/listings/${newListing._id}`);
 };
-
 
 module.exports.showRoute = async (req, res)=>{
     
